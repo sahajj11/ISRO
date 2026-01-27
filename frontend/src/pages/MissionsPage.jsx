@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, Rocket, Info, ChevronRight } from 'lucide-react';
+import { Search, Filter, Rocket, Info, ChevronRight, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const missionData = [
+  // ... (keep your existing missionData array here)
   {
     id: 1,
     name: "PSLV-C62 / EOS-N1",
     date: "JAN 12, 2026",
     category: "Recent",
-    image: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&q=80&w=1200", // Replace with actual PSLV-C62 launch photo
+    image: "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&q=80&w=1200",
     description: "64th flight of PSLV, successfully deploying EOS-N1 and 15 co-passenger satellites.",
     tag: "Launch Success"
   },
@@ -17,7 +19,7 @@ const missionData = [
     name: "Gaganyaan-4 (Crewed)",
     date: "Q4 2026",
     category: "Upcoming",
-    image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=1200", // Human spaceflight concept
+    image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=1200",
     description: "The historic first crewed mission taking Indian astronauts to Low Earth Orbit.",
     tag: "Priority"
   },
@@ -26,7 +28,7 @@ const missionData = [
     name: "NISAR",
     date: "JUL 30, 2025",
     category: "Recent",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200", // Earth Observation
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
     description: "Joint NASA-ISRO mission providing all-weather, day-night imaging of Earth.",
     tag: "Dual-Frequency Radar"
   },
@@ -35,7 +37,7 @@ const missionData = [
     name: "Chandrayaan-3",
     date: "AUG 23, 2023",
     category: "Legacy",
-    image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&q=80&w=1200", // Lunar Surface
+    image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&q=80&w=1200",
     description: "Historic soft landing on the Lunar South Pole, establishing India as a lunar power.",
     tag: "Historic"
   }
@@ -43,6 +45,7 @@ const missionData = [
 
 const MissionsPage = () => {
   const [filter, setFilter] = useState('All');
+  const navigate = useNavigate(); // Initialize navigate
 
   const filteredMissions = filter === 'All' 
     ? missionData 
@@ -52,6 +55,17 @@ const MissionsPage = () => {
     <div className="min-h-screen bg-[#050505] pt-32 pb-20 px-6">
       <div className="max-w-7xl mx-auto">
         
+        {/* Navigation / Back Button */}
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          onClick={() => navigate('/')} // Navigate to home
+          className="group flex items-center gap-2 text-gray-500 hover:text-[#F47216] transition-colors mb-12 font-mono text-xs uppercase tracking-[0.2em]"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Return to Command Center
+        </motion.button>
+
         {/* Header Section */}
         <header className="mb-16">
           <motion.h1 
@@ -63,7 +77,6 @@ const MissionsPage = () => {
           </motion.h1>
           
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            {/* Filter Pills */}
             <div className="flex gap-2 p-1 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md">
               {['All', 'Upcoming', 'Recent', 'Legacy'].map((cat) => (
                 <button
@@ -93,18 +106,15 @@ const MissionsPage = () => {
                 transition={{ duration: 0.4 }}
                 className="group relative h-[500px] rounded-[2.5rem] overflow-hidden cursor-pointer"
               >
-                {/* Background Image */}
                 <img 
                   src={mission.image} 
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                   alt={mission.name}
                 />
                 
-                {/* Overlay Gradients */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/20 to-transparent opacity-80" />
                 <div className="absolute inset-0 bg-[#F47216]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* Content */}
                 <div className="absolute inset-0 p-10 flex flex-col justify-between">
                   <div className="flex justify-between items-start">
                     <span className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-black text-white uppercase tracking-widest">

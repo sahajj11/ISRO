@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Rocket, Menu, X, ChevronRight, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+   const navLinks = [
+    { name: 'Missions', path: '/missions' },
+    { name: 'Fleet', path: '/fleet' },
+    { name: 'Science', path: '/science' },
+    { name: 'Gallery', path: '/gallery' },
+  ];
 
   // Effect to handle background blur on scroll
   useEffect(() => {
@@ -13,6 +21,8 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navigate=useNavigate()
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] px-4 py-4 md:px-10 transition-all duration-300">
@@ -38,18 +48,34 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links - Minimalist approach */}
-        <div className="hidden md:flex items-center gap-10">
-          {['Missions', 'Fleet', 'Science', 'Gallery'].map((item) => (
-            <a 
+        {/* <ul className="hidden md:flex items-center gap-10">
+          {navLinks.map((item) => (
+            <li key={item.name}>
+            <button 
               key={item} 
-              href={`#${item.toLowerCase()}`} 
+             
+              onClick={()=>navigate(item.path)}
               className="text-sm font-medium text-gray-400 hover:text-white transition-colors relative group"
             >
               {item}
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#F47216] transition-all group-hover:w-full" />
-            </a>
+            </button>
+            </li>
           ))}
-        </div>
+        </ul> */}
+        <ul className="hidden md:flex items-center gap-10 list-none">
+          {navLinks.map((item) => (
+            <li key={item.name}>
+              <button 
+                onClick={() => navigate(item.path)}
+                className="text-sm font-medium text-gray-400 hover:text-white transition-colors relative group"
+              >
+                {item.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#F47216] transition-all group-hover:w-full" />
+              </button>
+            </li>
+          ))}
+        </ul>
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-4">
