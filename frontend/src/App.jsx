@@ -12,6 +12,11 @@ import SatelliteRadar from "./components/SatelliteRadar";
 import FleetPage from "./pages/FleetPage";
 import Home from "./pages/Home";
 import MissionsPage from "./pages/MissionsPage";
+import SciencePage from "./pages/SciencePage";
+import GalleryPage from "./pages/GalleryPage";
+import SatelliteHero from "./components/FloatingSatellite";
+
+import SolarModel from "./components/SolarModel";
 
 
 
@@ -29,6 +34,9 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path='/missions' element={<MissionsPage />} />
             <Route path='/fleet' element={<FleetPage />} />
+            <Route path='/science' element={<SciencePage />} />
+            <Route path='/gallery' element={<GalleryPage />} />
+            <Route path='/s' element={<SolarModel />} />
            
 
             {/* Add more routes here as you build them */}
